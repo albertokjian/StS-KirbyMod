@@ -6,12 +6,12 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import kirby.KirbyMod;
-import kirby.characters.TheDefault;
+import kirby.characters.Kirby;
 import kirby.powers.RarePower;
 
 import static kirby.KirbyMod.makeCardPath;
 
-public class DefaultRarePower extends AbstractDynamicCard {
+public class DefaultRarePower extends AbstractKirbyCard {
 
     /*
      * Wiki-page: https://github.com/daviscook477/BaseMod/wiki/Custom-Cards
@@ -32,7 +32,7 @@ public class DefaultRarePower extends AbstractDynamicCard {
     private static final CardRarity RARITY = CardRarity.RARE;
     private static final CardTarget TARGET = CardTarget.SELF;
     private static final CardType TYPE = CardType.POWER;
-    public static final CardColor COLOR = TheDefault.Enums.COLOR_GRAY;
+    public static final CardColor COLOR = Kirby.Enums.COLOR_PINK;
 
     private static final int COST = 3;
     private static final int UPGRADE_COST = 2;

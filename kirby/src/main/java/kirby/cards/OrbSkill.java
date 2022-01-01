@@ -7,12 +7,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import kirby.KirbyMod;
-import kirby.characters.TheDefault;
+import kirby.characters.Kirby;
 import kirby.orbs.DefaultOrb;
 
 import static kirby.KirbyMod.makeCardPath;
 
-public class OrbSkill extends AbstractDynamicCard {
+public class OrbSkill extends AbstractKirbyCard {
 
     /*
      * Orb time.
@@ -38,7 +38,7 @@ public class OrbSkill extends AbstractDynamicCard {
     private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.SELF;
     private static final CardType TYPE = CardType.SKILL;
-    public static final CardColor COLOR = TheDefault.Enums.COLOR_GRAY;
+    public static final CardColor COLOR = Kirby.Enums.COLOR_PINK;
 
     private static final int COST = 1;
 

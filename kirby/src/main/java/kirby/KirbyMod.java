@@ -1,6 +1,9 @@
 package kirby;
 
-import basemod.*;
+import basemod.AutoAdd;
+import basemod.BaseMod;
+import basemod.ModLabeledToggleButton;
+import basemod.ModPanel;
 import basemod.eventUtil.AddEventParams;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
@@ -18,10 +21,8 @@ import com.megacrit.cardcrawl.helpers.CardHelper;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import kirby.cards.*;
-import kirby.characters.TheDefault;
+import kirby.cards.AbstractKirbyCard;
+import kirby.characters.Kirby;
 import kirby.events.IdentityCrisisEvent;
 import kirby.potions.PlaceholderPotion;
 import kirby.relics.BottledPlaceholderRelic;
@@ -32,6 +33,8 @@ import kirby.util.IDCheckDontTouchPls;
 import kirby.util.TextureLoader;
 import kirby.variables.DefaultCustomVariable;
 import kirby.variables.DefaultSecondMagicNumber;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -69,6 +72,7 @@ import java.util.Properties;
 
 @SpireInitializer
 public class KirbyMod implements
+        AddAudioSubscriber,
         EditCardsSubscriber,
         EditRelicsSubscriber,
         EditStringsSubscriber,
@@ -86,15 +90,15 @@ public class KirbyMod implements
     public static boolean enablePlaceholder = true; // The boolean we'll be setting on/off (true/false)
 
     //This is for the in-game mod settings panel.
-    private static final String MODNAME = "Default Mod";
-    private static final String AUTHOR = "Gremious"; // And pretty soon - You!
+    private static final String MODNAME = "Kirby Mod";
+    private static final String AUTHOR = "albertok"; // And pretty soon - You!
     private static final String DESCRIPTION = "A base for Slay the Spire to start your own mod from, feat. the Default.";
     
     // =============== INPUT TEXTURE LOCATION =================
     
     // Colors (RGB)
     // Character Color
-    public static final Color DEFAULT_GRAY = CardHelper.getColor(64.0f, 70.0f, 70.0f);
+    public static final Color KIRBY_PINK = CardHelper.getColor(219.0f, 79.0f, 144.0f);
     
     // Potion Colors in RGB
     public static final Color PLACEHOLDER_POTION_LIQUID = CardHelper.getColor(209.0f, 53.0f, 18.0f); // Orange-ish Red
@@ -122,18 +126,19 @@ public class KirbyMod implements
     private static final String ENERGY_ORB_DEFAULT_GRAY_PORTRAIT = "kirbyResources/images/1024/card_default_gray_orb.png";
     
     // Character assets
-    private static final String THE_DEFAULT_BUTTON = "kirbyResources/images/charSelect/DefaultCharacterButton.png";
-    private static final String THE_DEFAULT_PORTRAIT = "kirbyResources/images/charSelect/DefaultCharacterPortraitBG.png";
-    public static final String THE_DEFAULT_SHOULDER_1 = "kirbyResources/images/char/defaultCharacter/shoulder.png";
-    public static final String THE_DEFAULT_SHOULDER_2 = "kirbyResources/images/char/defaultCharacter/shoulder2.png";
-    public static final String THE_DEFAULT_CORPSE = "kirbyResources/images/char/defaultCharacter/corpse.png";
+    private static final String KIRBY_BUTTON = "kirbyResources/images/charSelect/KirbyCharacterButton.png";
+    private static final String KIRBY_PORTRAIT = "kirbyResources/images/charSelect/KirbyCharacterPortraitBG.png";
+    public static final String KIRBY_IDLE = "kirbyResources/images/char/KirbyCharacter/idle.png";
+    public static final String KIRBY_SHOULDER_1 = "kirbyResources/images/char/KirbyCharacter/shoulder.png";
+    public static final String KIRBY_SHOULDER_2 = "kirbyResources/images/char/KirbyCharacter/shoulder2.png";
+    public static final String KIRBY_CORPSE = "kirbyResources/images/char/KirbyCharacter/corpse.png";
     
     //Mod Badge - A small icon that appears in the mod settings menu next to your mod.
     public static final String BADGE_IMAGE = "kirbyResources/images/Badge.png";
     
     // Atlas and JSON files for the Animations
-    public static final String THE_DEFAULT_SKELETON_ATLAS = "kirbyResources/images/char/defaultCharacter/skeleton.atlas";
-    public static final String THE_DEFAULT_SKELETON_JSON = "kirbyResources/images/char/defaultCharacter/skeleton.json";
+    public static final String THE_DEFAULT_SKELETON_ATLAS = "kirbyResources/images/char/KirbyCharacter/skeleton.atlas";
+    public static final String THE_DEFAULT_SKELETON_JSON = "kirbyResources/images/char/KirbyCharacter/skeleton.json";
     
     // =============== MAKE IMAGE PATHS =================
     
@@ -160,13 +165,13 @@ public class KirbyMod implements
     public static String makeEventPath(String resourcePath) {
         return getModID() + "Resources/images/events/" + resourcePath;
     }
-    
+
     // =============== /MAKE IMAGE PATHS/ =================
     
     // =============== /INPUT TEXTURE LOCATION/ =================
     
     
-    // =============== SUBSCRIBE, CREATE THE COLOR_GRAY, INITIALIZE =================
+    // =============== SUBSCRIBE, CREATE THE COLOR_PINK, INITIALIZE =================
     
     public KirbyMod() {
         logger.info("Subscribe to BaseMod hooks");
@@ -202,10 +207,10 @@ public class KirbyMod implements
         
         logger.info("Done subscribing");
         
-        logger.info("Creating the color " + TheDefault.Enums.COLOR_GRAY.toString());
+        logger.info("Creating the color " + Kirby.Enums.COLOR_PINK.toString());
         
-        BaseMod.addColor(TheDefault.Enums.COLOR_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
-                DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY, DEFAULT_GRAY,
+        BaseMod.addColor(Kirby.Enums.COLOR_PINK, KIRBY_PINK, KIRBY_PINK, KIRBY_PINK,
+                KIRBY_PINK, KIRBY_PINK, KIRBY_PINK, KIRBY_PINK,
                 ATTACK_DEFAULT_GRAY, SKILL_DEFAULT_GRAY, POWER_DEFAULT_GRAY, ENERGY_ORB_DEFAULT_GRAY,
                 ATTACK_DEFAULT_GRAY_PORTRAIT, SKILL_DEFAULT_GRAY_PORTRAIT, POWER_DEFAULT_GRAY_PORTRAIT,
                 ENERGY_ORB_DEFAULT_GRAY_PORTRAIT, CARD_ENERGY_ORB);
@@ -218,7 +223,7 @@ public class KirbyMod implements
         // The actual mod Button is added below in receivePostInitialize()
         theDefaultDefaultSettings.setProperty(ENABLE_PLACEHOLDER_SETTINGS, "FALSE"); // This is the default setting. It's actually set...
         try {
-            SpireConfig config = new SpireConfig("defaultMod", "theDefaultConfig", theDefaultDefaultSettings); // ...right here
+            SpireConfig config = new SpireConfig("kirbyMod", "theDefaultConfig", theDefaultDefaultSettings); // ...right here
             // the "fileName" parameter is the name of the file MTS will create where it will save our setting.
             config.load(); // Load the setting and set the boolean to equal it
             enablePlaceholder = config.getBool(ENABLE_PLACEHOLDER_SETTINGS);
@@ -275,7 +280,7 @@ public class KirbyMod implements
     
     public static void initialize() {
         logger.info("========================= Initializing Default Mod. Hi. =========================");
-        KirbyMod defaultmod = new KirbyMod();
+        KirbyMod kirbyMod = new KirbyMod();
         logger.info("========================= /Default Mod Initialized. Hello World./ =========================");
     }
     
@@ -286,13 +291,13 @@ public class KirbyMod implements
     
     @Override
     public void receiveEditCharacters() {
-        logger.info("Beginning to edit characters. " + "Add " + TheDefault.Enums.THE_DEFAULT.toString());
+        logger.info("Beginning to edit characters. " + "Add " + Kirby.Enums.THE_KIRBY.toString());
         
-        BaseMod.addCharacter(new TheDefault("the Default", TheDefault.Enums.THE_DEFAULT),
-                THE_DEFAULT_BUTTON, THE_DEFAULT_PORTRAIT, TheDefault.Enums.THE_DEFAULT);
+        BaseMod.addCharacter(new Kirby("the Default", Kirby.Enums.THE_KIRBY),
+                KIRBY_BUTTON, KIRBY_PORTRAIT, Kirby.Enums.THE_KIRBY);
         
         receiveEditPotions();
-        logger.info("Added " + TheDefault.Enums.THE_DEFAULT.toString());
+        logger.info("Added " + Kirby.Enums.THE_KIRBY.toString());
     }
     
     // =============== /LOAD THE CHARACTER/ =================
@@ -321,7 +326,7 @@ public class KirbyMod implements
             enablePlaceholder = button.enabled; // The boolean true/false will be whether the button is enabled or not
             try {
                 // And based on that boolean, set the settings and save them
-                SpireConfig config = new SpireConfig("defaultMod", "theDefaultConfig", theDefaultDefaultSettings);
+                SpireConfig config = new SpireConfig("kirbyMod", "theDefaultConfig", theDefaultDefaultSettings);
                 config.setBool(ENABLE_PLACEHOLDER_SETTINGS, enablePlaceholder);
                 config.save();
             } catch (Exception e) {
@@ -333,6 +338,12 @@ public class KirbyMod implements
         
         BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
 
+        // Register the custom rewards
+//        BaseMod.registerCustomReward(RewardsEnumPatch.CopyAbilityReward, (rewardSave) -> {
+//            return new (AbstractCard.CardColor.valueOf(rewardSave.id));
+//        }, (customReward) -> {
+//            return new RewardSave(customReward.type.toString(), customReward instanceof ColorfulCardReward ? ((ColorfulCardReward)customReward).myColor.toString() : "COLORLESS");
+//        });
         
         // =============== EVENTS =================
         // https://github.com/daviscook477/BaseMod/wiki/Custom-Events
@@ -350,7 +361,7 @@ public class KirbyMod implements
         // Since this is a builder these method calls (outside of create()) can be skipped/added as necessary
         AddEventParams eventParams = new AddEventParams.Builder(IdentityCrisisEvent.ID, IdentityCrisisEvent.class) // for this specific event
             .dungeonID(TheCity.ID) // The dungeon (act) this event will appear in
-            .playerClass(TheDefault.Enums.THE_DEFAULT) // Character specific event
+            .playerClass(Kirby.Enums.THE_KIRBY) // Character specific event
             .create();
 
         // Add the event
@@ -361,7 +372,15 @@ public class KirbyMod implements
     }
     
     // =============== / POST-INITIALIZE/ =================
-    
+
+    // ================ ADD AUDIO ===================
+    @Override
+    public void receiveAddAudio() {
+        BaseMod.addAudio("KIRBY_INHALE", "kirbyResources/music/inhale.ogg");
+
+    }
+    // ================ /ADD AUDIO/ ===================
+
     // ================ ADD POTIONS ===================
     
     public void receiveEditPotions() {
@@ -370,7 +389,7 @@ public class KirbyMod implements
         // Class Specific Potion. If you want your potion to not be class-specific,
         // just remove the player class at the end (in this case the "TheDefaultEnum.THE_DEFAULT".
         // Remember, you can press ctrl+P inside parentheses like addPotions)
-        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID, TheDefault.Enums.THE_DEFAULT);
+        BaseMod.addPotion(PlaceholderPotion.class, PLACEHOLDER_POTION_LIQUID, PLACEHOLDER_POTION_HYBRID, PLACEHOLDER_POTION_SPOTS, PlaceholderPotion.POTION_ID, Kirby.Enums.THE_KIRBY);
         
         logger.info("Done editing potions");
     }
@@ -392,9 +411,9 @@ public class KirbyMod implements
         // in order to automatically differentiate which pool to add the relic too.
 
         // This adds a character specific relic. Only when you play with the mentioned color, will you get this relic.
-        BaseMod.addRelicToCustomPool(new PlaceholderRelic(), TheDefault.Enums.COLOR_GRAY);
-        BaseMod.addRelicToCustomPool(new BottledPlaceholderRelic(), TheDefault.Enums.COLOR_GRAY);
-        BaseMod.addRelicToCustomPool(new DefaultClickableRelic(), TheDefault.Enums.COLOR_GRAY);
+        BaseMod.addRelicToCustomPool(new PlaceholderRelic(), Kirby.Enums.COLOR_PINK);
+        BaseMod.addRelicToCustomPool(new BottledPlaceholderRelic(), Kirby.Enums.COLOR_PINK);
+        BaseMod.addRelicToCustomPool(new DefaultClickableRelic(), Kirby.Enums.COLOR_PINK);
         
         // This adds a relic to the Shared pool. Every character can find this relic.
         BaseMod.addRelic(new PlaceholderRelic2(), RelicType.SHARED);
@@ -437,7 +456,7 @@ public class KirbyMod implements
         //Rename the "KirbyMod" with the modid in your ModTheSpire.json file
         //The artifact mentioned in ModTheSpire.json is the artifactId in pom.xml you should've edited earlier
         new AutoAdd("KirbyMod") // ${project.artifactId}
-            .packageFilter(AbstractDefaultCard.class) // filters to any class in the same package as AbstractDefaultCard, nested packages included
+            .packageFilter(AbstractKirbyCard.class) // filters to any class in the same package as AbstractDefaultCard, nested packages included
             .setDefaultSeen(true)
             .cards();
 
@@ -460,32 +479,32 @@ public class KirbyMod implements
         
         // CardStrings
         BaseMod.loadCustomStringsFile(CardStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Card-Strings.json");
+                getModID() + "Resources/localization/eng/CardStrings.json");
         
         // PowerStrings
         BaseMod.loadCustomStringsFile(PowerStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Power-Strings.json");
+                getModID() + "Resources/localization/eng/PowerStrings.json");
         
         // RelicStrings
         BaseMod.loadCustomStringsFile(RelicStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Relic-Strings.json");
+                getModID() + "Resources/localization/eng/RelicStrings.json");
         
         // Event Strings
         BaseMod.loadCustomStringsFile(EventStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Event-Strings.json");
+                getModID() + "Resources/localization/eng/EventStrings.json");
         
         // PotionStrings
         BaseMod.loadCustomStringsFile(PotionStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Potion-Strings.json");
+                getModID() + "Resources/localization/eng/PotionStrings.json");
         
         // CharacterStrings
         BaseMod.loadCustomStringsFile(CharacterStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Character-Strings.json");
+                getModID() + "Resources/localization/eng/CharacterStrings.json");
         
         // OrbStrings
         BaseMod.loadCustomStringsFile(OrbStrings.class,
-                getModID() + "Resources/localization/eng/KirbyMod-Orb-Strings.json");
-        
+                getModID() + "Resources/localization/eng/OrbStrings.json");
+
         logger.info("Done edittting strings");
     }
     
@@ -504,7 +523,7 @@ public class KirbyMod implements
         // In Keyword-Strings.json you would have PROPER_NAME as A Long Keyword and the first element in NAMES be a long keyword, and the second element be a_long_keyword
         
         Gson gson = new Gson();
-        String json = Gdx.files.internal(getModID() + "Resources/localization/eng/KirbyMod-Keyword-Strings.json").readString(String.valueOf(StandardCharsets.UTF_8));
+        String json = Gdx.files.internal(getModID() + "Resources/localization/eng/KeywordStrings.json").readString(String.valueOf(StandardCharsets.UTF_8));
         com.evacipated.cardcrawl.mod.stslib.Keyword[] keywords = gson.fromJson(json, com.evacipated.cardcrawl.mod.stslib.Keyword[].class);
         
         if (keywords != null) {

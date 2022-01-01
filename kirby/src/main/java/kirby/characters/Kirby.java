@@ -1,11 +1,8 @@
 package kirby.characters;
 
 import basemod.abstracts.CustomPlayer;
-import basemod.animations.SpriterAnimation;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.MathUtils;
-import com.esotericsoftware.spine.AnimationState;
 import com.evacipated.cardcrawl.modthespire.lib.SpireEnum;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -17,6 +14,7 @@ import com.megacrit.cardcrawl.helpers.CardLibrary;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ScreenShake;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import kirby.KirbyMod;
@@ -30,13 +28,13 @@ import kirby.relics.PlaceholderRelic2;
 import java.util.ArrayList;
 
 import static kirby.KirbyMod.*;
-import static kirby.characters.TheDefault.Enums.COLOR_GRAY;
+import static kirby.characters.Kirby.Enums.COLOR_PINK;
 
 //Wiki-page https://github.com/daviscook477/BaseMod/wiki/Custom-Characters
 //and https://github.com/daviscook477/BaseMod/wiki/Migrating-to-5.0
 //All text (starting description and loadout, anything labeled TEXT[]) can be found in KirbyMod-character-Strings.json in the resources
 
-public class TheDefault extends CustomPlayer {
+public class Kirby extends CustomPlayer {
     public static final Logger logger = LogManager.getLogger(KirbyMod.class.getName());
 
     // =============== CHARACTER ENUMERATORS =================
@@ -48,10 +46,10 @@ public class TheDefault extends CustomPlayer {
 
     public static class Enums {
         @SpireEnum
-        public static AbstractPlayer.PlayerClass THE_DEFAULT;
-        @SpireEnum(name = "DEFAULT_GRAY_COLOR") // These two HAVE to have the same absolutely identical name.
-        public static AbstractCard.CardColor COLOR_GRAY;
-        @SpireEnum(name = "DEFAULT_GRAY_COLOR") @SuppressWarnings("unused")
+        public static AbstractPlayer.PlayerClass THE_KIRBY;
+        @SpireEnum(name = "DEFAULT_PINK_COLOR") // These two HAVE to have the same absolutely identical name.
+        public static AbstractCard.CardColor COLOR_PINK;
+        @SpireEnum(name = "DEFAULT_PINK_COLOR") @SuppressWarnings("unused")
         public static CardLibrary.LibraryType LIBRARY_COLOR;
     }
 
@@ -65,14 +63,14 @@ public class TheDefault extends CustomPlayer {
     public static final int MAX_HP = 75;
     public static final int STARTING_GOLD = 99;
     public static final int CARD_DRAW = 9;
-    public static final int ORB_SLOTS = 3;
+    public static final int ORB_SLOTS = 0;
 
     // =============== /BASE STATS/ =================
 
 
     // =============== STRINGS =================
 
-    private static final String ID = makeID("DefaultCharacter");
+    private static final String ID = makeID("KirbyCharacter");
     private static final CharacterStrings characterStrings = CardCrawlGame.languagePack.getCharacterString(ID);
     private static final String[] NAMES = characterStrings.NAMES;
     private static final String[] TEXT = characterStrings.TEXT;
@@ -83,51 +81,37 @@ public class TheDefault extends CustomPlayer {
     // =============== TEXTURES OF BIG ENERGY ORB ===============
 
     public static final String[] orbTextures = {
-            "kirbyResources/images/char/defaultCharacter/orb/layer1.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer2.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer3.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer4.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer5.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer6.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer1d.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer2d.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer3d.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer4d.png",
-            "kirbyResources/images/char/defaultCharacter/orb/layer5d.png",};
+            "kirbyResources/images/char/KirbyCharacter/orb/layer1.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer2.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer3.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer4.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer5.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer6.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer1d.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer2d.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer3d.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer4d.png",
+            "kirbyResources/images/char/KirbyCharacter/orb/layer5d.png",};
 
     // =============== /TEXTURES OF BIG ENERGY ORB/ ===============
 
     // =============== CHARACTER CLASS START =================
 
-    public TheDefault(String name, PlayerClass setClass) {
+    public Kirby(String name, PlayerClass setClass) {
         super(name, setClass, orbTextures,
-                "kirbyResources/images/char/defaultCharacter/orb/vfx.png", null,
-                new SpriterAnimation(
-                        "kirbyResources/images/char/defaultCharacter/Spriter/theDefaultAnimation.scml"));
+                "kirbyResources/images/char/KirbyCharacter/orb/vfx.png", null, null, null);
 
 
         // =============== TEXTURES, ENERGY, LOADOUT =================  
 
-        initializeClass(null, // required call to load textures and setup energy/loadout.
+        initializeClass(KIRBY_IDLE, // required call to load textures and setup energy/loadout.
                 // I left these in KirbyMod.java (Ctrl+click them to see where they are, Ctrl+hover to see what they read.)
-                THE_DEFAULT_SHOULDER_2, // campfire pose
-                THE_DEFAULT_SHOULDER_1, // another campfire pose
-                THE_DEFAULT_CORPSE, // dead corpse
+                KIRBY_SHOULDER_2, // campfire pose
+                KIRBY_SHOULDER_1, // another campfire pose
+                KIRBY_CORPSE, // dead corpse
                 getLoadout(), 20.0F, -10.0F, 220.0F, 290.0F, new EnergyManager(ENERGY_PER_TURN)); // energy manager
 
         // =============== /TEXTURES, ENERGY, LOADOUT/ =================
-
-
-        // =============== ANIMATIONS =================  
-
-        loadAnimation(
-                THE_DEFAULT_SKELETON_ATLAS,
-                THE_DEFAULT_SKELETON_JSON,
-                1.0f);
-        AnimationState.TrackEntry e = state.setAnimation(0, "animation", true);
-        e.setTime(e.getEndTime() * MathUtils.random());
-
-        // =============== /ANIMATIONS/ =================
 
 
         // =============== TEXT BUBBLE LOCATION =================
@@ -215,13 +199,13 @@ public class TheDefault extends CustomPlayer {
     // Should return the card color enum to be associated with your character.
     @Override
     public AbstractCard.CardColor getCardColor() {
-        return COLOR_GRAY;
+        return COLOR_PINK;
     }
 
     // Should return a color object to be used to color the trail of moving cards
     @Override
     public Color getCardTrailColor() {
-        return KirbyMod.DEFAULT_GRAY;
+        return KirbyMod.KIRBY_PINK;
     }
 
     // Should return a BitmapFont object that you can use to customize how your
@@ -252,20 +236,20 @@ public class TheDefault extends CustomPlayer {
     // Should return a new instance of your character, sending name as its name parameter.
     @Override
     public AbstractPlayer newInstance() {
-        return new TheDefault(name, chosenClass);
+        return new Kirby(name, chosenClass);
     }
 
     // Should return a Color object to be used to color the miniature card images in run history.
     @Override
     public Color getCardRenderColor() {
-        return KirbyMod.DEFAULT_GRAY;
+        return KirbyMod.KIRBY_PINK;
     }
 
     // Should return a Color object to be used as screen tint effect when your
     // character attacks the heart.
     @Override
     public Color getSlashAttackColor() {
-        return KirbyMod.DEFAULT_GRAY;
+        return KirbyMod.KIRBY_PINK;
     }
 
     // Should return an AttackEffect array of any size greater than 0. These effects

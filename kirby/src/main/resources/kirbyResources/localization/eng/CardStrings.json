@@ -5,12 +5,12 @@
   },
   "kirby:DefaultCommonSkill": {
     "NAME": "Defend",
-    "DESCRIPTION": "Gain !B! Block. NL thedefault:Multiword_Keyword."
+    "DESCRIPTION": "Gain !B! Block. NL kirby:Multiword_Keyword."
   },
   "kirby:DefaultCommonPower": {
     "NAME": "Hold Place",
-    "DESCRIPTION": "Gain !M! thedefault:Keyword.",
-    "UPGRADE_DESCRIPTION": "Gain !M! thedefault:Keywords."
+    "DESCRIPTION": "Gain !M! kirby:Keyword.",
+    "UPGRADE_DESCRIPTION": "Gain !M! kirby:Keywords."
   },
   "kirby:DefaultUncommonAttack": {
     "NAME": "Big slap",
@@ -22,8 +22,8 @@
   },
   "kirby:DefaultUncommonPower": {
     "NAME": "Weirdness",
-    "DESCRIPTION": "Gain X thedefault:Keywords.",
-    "UPGRADE_DESCRIPTION": "Gain X +1 thedefault:Keywords."
+    "DESCRIPTION": "Gain X kirby:Keywords.",
+    "UPGRADE_DESCRIPTION": "Gain X +1 kirby:Keywords."
   },
   "kirby:DefaultRareAttack": {
     "NAME": "TOUCH",
@@ -49,5 +49,12 @@
   "kirby:OrbSkill": {
     "NAME": "Get Orb",
     "DESCRIPTION": "Channel 1 Default Orb."
+  },
+  "kirby:Inhale": {
+    "NAME": "Inhale",
+    "DESCRIPTION": "kirby:Inhale an enemy below or equal to !M! HP.",
+    "EXTENDED_DESCRIPTION": [
+      "This enemy has too much HP."
+    ]
   }
 }

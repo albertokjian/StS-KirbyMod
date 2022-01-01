@@ -16,5 +16,20 @@
       "multikeyword"
     ],
     "DESCRIPTION": "Make sure the first element in the NAMES is the same as your PROPER_NAME. The rest is to match keywords like the single word keyword."
+  },
+  {
+    "NAMES": [
+      "inhale"
+    ],
+    "DESCRIPTION": "Gain the ability based on the enemy."
+  },
+  {
+    "PROPER_NAME": "Copy Ability",
+    "NAMES": [
+      "Copy Ability",
+      "Copy Abilities",
+      "Copy_Ability"
+    ],
+    "DESCRIPTION": "Kirby can gain one copy ability at a time with special effects."
   }
 ]

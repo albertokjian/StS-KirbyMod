@@ -8,13 +8,13 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import kirby.KirbyMod;
-import kirby.characters.TheDefault;
+import kirby.characters.Kirby;
 
 import static kirby.KirbyMod.makeCardPath;
 
-// public class ${NAME} extends AbstractDynamicCard
+// public class ${NAME} extends AbstractKirbyCard
 @AutoAdd.Ignore // Remove this line when you make a template. Refer to https://github.com/daviscook477/BaseMod/wiki/AutoAdd if you want to know what it does.
-public class CardTemplate extends AbstractDynamicCard {
+public class CardTemplate extends AbstractKirbyCard {
 
     /*
      * "Hey, I wanna make a bunch of cards now." - You, probably.
@@ -50,7 +50,7 @@ public class CardTemplate extends AbstractDynamicCard {
     private static final CardRarity RARITY = CardRarity.COMMON; //  Up to you, I like auto-complete on these
     private static final CardTarget TARGET = CardTarget.ENEMY;  //   since they don't change much.
     private static final CardType TYPE = CardType.ATTACK;       //
-    public static final CardColor COLOR = TheDefault.Enums.COLOR_GRAY;
+    public static final CardColor COLOR = Kirby.Enums.COLOR_PINK;
 
     private static final int COST = 1;  // COST = ${COST}
     private static final int UPGRADED_COST = 0; // UPGRADED_COST = ${UPGRADED_COST}
