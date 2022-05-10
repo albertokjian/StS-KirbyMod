@@ -155,6 +155,8 @@ public class Kirby extends CustomPlayer {
         retVal.add(DefaultAttackWithVariable.ID);
         retVal.add(DefaultSecondMagicNumberSkill.ID);
         retVal.add(OrbSkill.ID);
+
+        retVal.add(Inhale.ID);
         return retVal;
     }
 

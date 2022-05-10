@@ -505,6 +505,11 @@ public class KirbyMod implements
         BaseMod.loadCustomStringsFile(OrbStrings.class,
                 getModID() + "Resources/localization/eng/OrbStrings.json");
 
+        // UIStrings
+        BaseMod.loadCustomStringsFile(UIStrings.class,
+                getModID() + "Resources/localization/eng/UIStrings.json");
+
+
         logger.info("Done edittting strings");
     }
     

@@ -1,0 +1,8 @@
+{
+  "kirby:CopyAbilityReward": {
+    "TEXT": [
+      "Obtain the copied ability card",
+      "Take the card"
+    ]
+  }
+}

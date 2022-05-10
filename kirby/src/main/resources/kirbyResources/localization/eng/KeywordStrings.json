@@ -19,9 +19,10 @@
   },
   {
     "NAMES": [
-      "inhale"
+      "inhale",
+      "inhaled"
     ],
-    "DESCRIPTION": "Gain the ability based on the enemy."
+    "DESCRIPTION": "Gain a copy ability based on the enemy if possible. Gain a card reward based on the enemy at the end of combat. Cannot inhale if kirby has an active copy ability."
   },
   {
     "PROPER_NAME": "Copy Ability",
