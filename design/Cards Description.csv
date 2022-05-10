@@ -1,6 +1,0 @@
-﻿Done,Name,Type,Cost,Rarity,Effect (Base),Effect (Upgraded),Image
-No,Strike*,Attack,1 (1),Common,deal 6 damage,deal 9 damage,Puff of air
-No,Defend*,Skill,1 (1),Common,gain 5 block,gain 8 block,Guard
-No,Dash*,Attack,2 (2),Common,"deal 12 damage, apply 2 vulnerable","deal 14 damage, apply 3 vulnerable",Slide attack
-Yes,Neutral (Inhale)*,Skill,0,Common,"If an enemy is below or equal to 4HP, inhale.","If an enemy is below or equal to 5HP, inhale.",
-No,Float,Skill,1,Common,"Gain Flying 3 (reduce damage by 50% for X turns, gain 1 dazed for each unblocked damage)","Gain Flying 4 (reduce damage by 50% for X turns, gain 1 dazed for each unblocked damage)",Floating Cute Kirby
