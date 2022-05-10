@@ -1,0 +1,25 @@
+﻿Done,Name,Type,Cost,Rarity,Effect (Base),Effect (Upgraded),Image
+No,Cook,Attack,X,Uncommon,"cooks all enemies with less than (X+1)*4 HP, heals for HP total. exhaust","cooks all enemies with less than (X+1)*7 HP, heals for HP total. exhaust",Cook
+No,Crash,Attack,4,Rare,deals 150 damage split evenly between enemies. exhaust,deals 180 damage split evenly between enemies. exhaust,Crash
+No,Cutter,Attack,1,Common,"deal 4 damage to all enemies, apply 1 weak to a random enemy","deal 4 damage to all enemies, apply 1 weak to all enemies",Cutter
+No,Cleaning,Skill,2,Rare,"remove a random debuff, exhaust(Cleaning XP+1)","remove a random debuff, gain one artifact, exhaust",Cleaning
+No,Bomb,Skill,1,Uncommon,deal 12 damage in 2 turns (power symbol under enemies) (Bomb XP+1),"deal 18 damage in 2 turns, detonates current bomb",Bomb
+No,Beam,Attack,1,Common,deal 4 damage to all enemies twice (Beam XP+1),deal 6 damage to all enemies twice,Beam
+No,Sleep,Skill,1,Uncommon,Can only be played when you did not play a card this turn. End your turn. Remove a debuff next turn if you are not damaged or debuffed. You conserve your energy. Exhaust.,Can only be played when you did not play a card this turn. End your turn. Remove a debuff and heal 5 HP next turn if you are not damaged or debuffed. You conserve your energy. Exhaust.,Sleep
+No,Sleep,Skill,2,Rare,Play an exhausted card.,Play an exhausted card. Put it in the discard pile.,
+No,Fire,Skill,1,Common,"Apply 5 Sizzle, each card you play this turn applies 1 Sizzle","Apply 8 Sizzle, each card you play this turn applies 1 Sizzle",Fire
+No,Hammer,Attack,2,Uncommon,"Deal 6*vulnerable damage, apply 1 vulnerable.","Deal 8*vulnerable damage, apply 1 vulnerable.",Hammer
+No,Ice,Skill,2,Uncommon,Gain 12 block. Apply 1 freeze to a random enemy. Enemies with 4 freeze is frozen and will not move this turn.,Gain 12 block. Apply 1 freeze to all attacking enemies.,
+No,Needle,Skill,1,Uncommon,Gain 5 block and 1 Thorn.,Gain 8 block and 1 Thorn.,
+No,Parasol,Power,2,Uncommon,Prevent the next time you or your ally will lose HP,Prevent the next 2 times you or your ally will lose HP,
+No,Spark,Skill,1,Common,Apply 1 Weak. Gain 6 block per skill played this turn.,Apply 2 Weak. Gain 6 block per skill played this turn.,
+No,Stone,Skill,2,Common,Gain 20 block,Gain 28 block,
+No,Sword,,,,,,
+No,Constructor,Skill,1,Uncommon,Convert your blocks to temp HP. Exhaust,Convert your blocks to temp HP.,Constructor
+No,,,,,,,
+No,,,,,,,
+No,,,,,,,
+No,,,,,,,
+No,,,,,,,
+No,,,,,,,
+No,,,,,,,

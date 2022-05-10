@@ -1,0 +1,6 @@
+﻿Name,Tags,Description
+Bubble,Boss,Allows storing an enemy power previously used
+Blue Candle,,"Inhale curses, -1 hp"
+Kirbo,Starting,Create a 1-cost Inhale card per turn
+Infinite Inhale,,"Every time you inhale successfully, generate another inhale card"
+,,
